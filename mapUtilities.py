@@ -154,7 +154,6 @@ class mapManipulator(Node):
     
     
     def position_2_cell(self, pos):
-        print(pos)
         x,y = pos
         return floor( (-self.o_x + x)/self.getResolution()), -floor( -self.height + (-self.o_y + y)/self.getResolution() )
 
@@ -223,8 +222,6 @@ class mapManipulator(Node):
         grid.info.origin.orientation.w = np.cos(-np.pi/4)
         grid.info.origin.orientation.z = np.sin(-np.pi/4)
         offset = -self.height*self.getResolution()
-        print( offset )
-        print(self.getOrigin()[1])
 
 
         grid.info.origin.position.x, grid.info.origin.position.y = self.getOrigin()[0], +self.getOrigin()[1] - offset
