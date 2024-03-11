@@ -30,7 +30,8 @@ class particleFilter(Node):
     def __init__(self, mapFilename="/home/dastan/final/maps/room.yaml", numParticles=500):
         
         super().__init__("particleFiltering")
-
+        
+        self.tic = time.time()
 
         qos_profile_odom=QoSProfile(reliability=ReliabilityPolicy.BEST_EFFORT, durability=DurabilityPolicy.VOLATILE, depth=10)
         qos_profile_laserScanner = QoSProfile(reliability=ReliabilityPolicy.RELIABLE,
@@ -74,8 +75,8 @@ class particleFilter(Node):
     def initializeParticleFilter(self, x, y, th):
         
         numParticles = self.numParticles
-        self.particlePoses=np.random.uniform(low=[x-self.std_particle_x, y - self.std_particle_y, th - 0.3],
-                                             high=[x+self.std_particle_x, y + self.std_particle_y, th + 0.3], size=(numParticles, 3))
+        self.particlePoses=np.random.uniform(low=[x-self.std_particle_x, y - self.std_particle_y,  th - 1.0],
+                                             high=[x+self.std_particle_x, y + self.std_particle_y, th + 1.0], size=(numParticles, 3))
         
         self.particles = [particle(particle_, 1/numParticles) for particle_ in\
                            self.particlePoses]
@@ -147,8 +148,6 @@ class particleFilter(Node):
 
     def filterCallback(self, odomMsg: Odometry, laserMsg: LaserScan):
 
-        start_timer = time.time()
-
 
         if not self.initialized:
             return
@@ -166,9 +165,9 @@ class particleFilter(Node):
         w = odomMsg.twist.twist.angular.z
         v = odomMsg.twist.twist.linear.x
 
-        
+        dt = 0.2
         for i, particle_ in enumerate(self.particles):
-            particle_.motion_model(dx, dy, dth, v, w)
+            particle_.motion_model(dth, v, w, dt)
             particle_.calculateParticleWeight(laserMsg, self.mapUtilities)
             
             #print(f"particle at {particle_.getPose()} has weight of {particle_.getWeight()}")
@@ -190,16 +189,14 @@ class particleFilter(Node):
         self.publisher.publish(self.mapUtilities.to_message())
         self.normalizeWeights()
 
-        print(self.particles[np.argmax(self.weights)].getPose())
+        x,y, th = self.particles[np.argmax(self.weights)].getPose()
         self.visualizeParticles(self.resample(), stamp)
 
 
-        #self.resample()
         
         
         
-        end_time = time.time()
-        #print(f"the time took for the filter callback is {end_time-start_timer}")
+
 
 import rclpy
 

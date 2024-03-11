@@ -16,7 +16,7 @@ from utilities import *
 class mapManipulator(Node):
 
 
-    def __init__(self, filename_: str, laser_sig=0.4):
+    def __init__(self, filename_: str = "room.yaml", laser_sig=0.1):
         
         
         super().__init__('likelihood_field')
@@ -56,7 +56,16 @@ class mapManipulator(Node):
         self.likelihood_msg=None
 
         
+    def getAllObstacles(self):
+        image_array=self.image_array.T
+
         
+        
+        
+        indices = np.where(image_array < 10)
+        
+        return [self.cell_2_position([i, j]) for i, j in zip(indices[0], indices[1])]
+
     def getLikelihoodField(self):
         return self.likelihood_field
     
@@ -140,13 +149,14 @@ class mapManipulator(Node):
         return self.res
     
     def cell_2_position(self, pix):
-        i,j = pix
-        return self.o_x - i*self.getResolution(),  self.o_y - (self.height - j) * self.getResolution()
+        i,j= pix
+        return self.o_x + i*self.getResolution(),    (self.height - j) * self.getResolution()  + self.o_y  
     
     
     def position_2_cell(self, pos):
+        print(pos)
         x,y = pos
-        return floor( (x- self.o_x )/self.getResolution()), floor( self.height + (y-self.o_y)/self.getResolution())
+        return floor( (-self.o_x + x)/self.getResolution()), -floor( -self.height + (-self.o_y + y)/self.getResolution() )
 
 
     def make_likelihood_field(self):
@@ -156,7 +166,7 @@ class mapManipulator(Node):
         from sklearn.neighbors import KDTree
         
         
-        self.plot_pgm_image(image_array)
+
         indices = np.where(image_array < 10)
         
         occupied_points = [self.cell_2_position([i, j]) for i, j in zip(indices[0], indices[1])]
@@ -193,7 +203,6 @@ class mapManipulator(Node):
         data_ = set(np.array(np.round(flat_grid), dtype='int'))
 
         return data_
-    
     
     def to_message(self):
         """ Return a nav_msgs/OccupancyGrid representation of this map. """
@@ -236,8 +245,8 @@ class mapManipulator(Node):
 
 
         return grid
-    
-    
+
+
     def calculate_score(self,x,y):
         try:
             return self.likelihood_field[self.position_2_cell(x,y)]
@@ -362,5 +371,4 @@ if __name__=="__main__":
 
 
 # Usage example
-
 

@@ -9,13 +9,12 @@ class particle:
     def __init__(self, pose, weight):
         self.pose=pose
         self.weight=weight
-        self.dt = 0.2
 
 
 
-    def motion_model(self, dx,dy, dth, v, w):
-        self.pose[0]=v * np.cos(self.pose[2]) * self.dt + self.pose[0]
-        self.pose[1]=v * np.sin(self.pose[2]) * self.dt + self.pose[1]
+    def motion_model(self,dth, v, w, dt):
+        self.pose[0]=v * np.cos(self.pose[2]) * dt + self.pose[0]
+        self.pose[1]=v * np.sin(self.pose[2]) * dt + self.pose[1]
         self.pose[2]=dth + self.pose[2]
 
 
