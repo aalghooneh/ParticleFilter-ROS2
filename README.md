@@ -1,4 +1,4 @@
-# ParticleFilter-ROS2
+# ParticleFilter-ROS2 🚀🔥
 
 A straightforward implementation of the **Particle Filter** algorithm for ROS 2, tailored for the TurtleBot4 platform. This package provides a foundational framework for localization in robotic systems using Python. This is part of a larger mobile robotic course that can be found [here](https://github.com/aalghooneh/Autonomous_Mobile_Robotics_Student).
 
@@ -11,7 +11,7 @@ A straightforward implementation of the **Particle Filter** algorithm for ROS 2,
 5. [Contributing](#contributing)
 6. [License](#license)
 
-## Features
+## Features 🔥
 
 - **Particle Filter Localization**: Implements the particle filter algorithm to estimate the robot's pose based on sensor data.
 - **Map Utilities**: Tools for handling and publishing maps within the ROS 2 ecosystem.
@@ -35,7 +35,7 @@ A straightforward implementation of the **Particle Filter** algorithm for ROS 2,
    git clone https://github.com/aalghooneh/particlefilter-ros2.git
    ```
 
-2. **Install Dependencies**:
+2. **Install Dependencies** 🛠️:
    Navigate to the workspace root and install any dependencies:
    ```bash
    cd ~/ros2_ws
@@ -95,7 +95,7 @@ The repository comprises several key scripts:
 - **mapPublisher.py**: Node to publish the map to the ROS 2 network.
 - **utilities.py**: Additional helper functions supporting the main algorithms.
 
-## Contributing
+## Contributing 🚀
 
 Contributions are welcome! To contribute:
 
