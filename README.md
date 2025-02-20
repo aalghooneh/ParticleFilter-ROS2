@@ -17,7 +17,7 @@ A straightforward implementation of the **Particle Filter** algorithm for ROS 2,
 - **Map Utilities**: Tools for handling and publishing maps within the ROS 2 ecosystem.
 - **Visualization**: Integration with RViz for visualizing particles and robot pose.
 
-## Installation
+## Installation 🛠️
 
 ### Prerequisites
 
