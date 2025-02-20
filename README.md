@@ -1,6 +1,6 @@
 # ParticleFilter-ROS2
 
-A straightforward implementation of the **Particle Filter** algorithm for ROS 2, tailored for the TurtleBot4 platform. This package provides a foundational framework for localization in robotic systems using Python.
+A straightforward implementation of the **Particle Filter** algorithm for ROS 2, tailored for the TurtleBot4 platform. This package provides a foundational framework for localization in robotic systems using Python. This is part of a larger mobile robotic course that can be found [here](https://github.com/aalghooneh/Autonomous_Mobile_Robotics_Student).
 
 ## Table of Contents
 
